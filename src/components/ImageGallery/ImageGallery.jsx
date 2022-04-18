@@ -1,5 +1,4 @@
 import { Component } from 'react';
-// import { GalleryWrap } from './ImageGallery.styled';
 import { GalleryErrorView } from 'components/GalleryErrorView/GalleryErrorView';
 import { GalleryImagesView } from 'components/GalleryImagesView/GalleryImagesView';
 import { GalleryPendingView } from 'components/GalleryPendingView/GalleryPendingView';
