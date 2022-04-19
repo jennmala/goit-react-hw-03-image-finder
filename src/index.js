@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import './css-loader/react-spinner-loader.css';
+// import 'css-loader/react-spinner-loader.css';
+
 import { App } from './components/App/App';
 import reportWebVitals from './reportWebVitals';
 
