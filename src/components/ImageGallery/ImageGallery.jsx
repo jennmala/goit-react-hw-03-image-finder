@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { GalleryErrorView } from 'components/GalleryErrorView/GalleryErrorView';
 import { GalleryImagesView } from 'components/GalleryImagesView/GalleryImagesView';
 import { GalleryPendingView } from 'components/GalleryPendingView/GalleryPendingView';
+import { fetchPictures } from 'services/pictures-api';
 
 export class ImageGallery extends Component {
   state = {
@@ -12,21 +13,10 @@ export class ImageGallery extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.keyWord !== this.props.keyWord) {
-      const KEY = '25171774-7b79c52a8837e6f3634106172';
-
       this.setState({ status: 'pending' });
 
       setTimeout(() => {
-        fetch(
-          `https://pixabay.com/api/?q=${this.props.keyWord}s&page=1&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
-        )
-          .then(result => {
-            console.log(result);
-            if (result.ok) {
-              return result.json();
-            }
-            return Promise.reject(new Error('Try another request'));
-          })
+        fetchPictures(this.props.keyWord, 1)
           .then(pictures => {
             if (pictures.hits.length === 0) {
               return Promise.reject(
@@ -52,7 +42,12 @@ export class ImageGallery extends Component {
     }
 
     if (this.state.status === 'resolved') {
-      return <GalleryImagesView pictures={this.state.pictures} />;
+      return (
+        <GalleryImagesView
+          pictures={this.state.pictures}
+          keyWord={this.props.keyWord}
+        />
+      );
     }
   }
 }

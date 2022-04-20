@@ -1,10 +1,11 @@
 import errorImage from 'images/sadCat.jpg';
+import { Wrap, ImageError } from './GalleryErrorView.styled';
 
 export const GalleryErrorView = ({ message }) => {
   return (
-    <div>
+    <Wrap>
       {message}
-      <img src={errorImage} width="500" alt="sad cat" />
-    </div>
+      <ImageError src={errorImage} width="500" alt="sad cat" />
+    </Wrap>
   );
 };
