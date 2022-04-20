@@ -6,7 +6,6 @@ export function fetchPictures(keyWord, page) {
   ).then(result => {
     if (result.ok) {
       return result.json();
-      console.log(result);
     }
     return Promise.reject(new Error('Try another request'));
   });
