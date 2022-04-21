@@ -10,47 +10,43 @@ import { GalleryWrap } from './GalleryImagesView.styled';
 export class GalleryImagesView extends Component {
   state = {
     pictures: this.props.pictures,
-    page: 1,
-    loadingMore: false,
+    page: 2,
+    isLoadingMore: false,
   };
 
   onLoadMoreBtnClick = () => {
-    this.setState(prevState => ({
-      page: prevState.page + 1,
-      loadingMore: true,
-    }));
+    this.setState({ isLoadingMore: true });
 
-    setTimeout(() => {
-      fetchPictures(this.props.keyWord, this.state.page)
-        .then(pictures => {
-          this.setState(prevState => ({
-            pictures: [...prevState.pictures, ...pictures.hits],
-            loadingMore: false,
-          }));
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }, 2000);
+    fetchPictures(this.props.keyWord, this.state.page)
+      .then(pictures => {
+        this.setState(prevState => ({
+          pictures: [...prevState.pictures, ...pictures.hits],
+          isLoadingMore: false,
+          page: prevState.page + 1,
+        }));
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   render() {
+    const { pictures, isLoadingMore } = this.state;
+
     return (
       <>
         <GalleryWrap>
-          {this.state.pictures.map(
-            ({ id, webformatURL, largeImageURL, tags }) => (
-              <ImageGalleryItem
-                key={id}
-                smallImage={webformatURL}
-                largeImage={largeImageURL}
-                alt={tags}
-              />
-            )
-          )}
+          {pictures.map(({ id, webformatURL, largeImageURL, tags }) => (
+            <ImageGalleryItem
+              key={id}
+              smallImage={webformatURL}
+              largeImage={largeImageURL}
+              alt={tags}
+            />
+          ))}
         </GalleryWrap>
 
-        {this.state.loadingMore ? (
+        {isLoadingMore ? (
           <GalleryPendingView />
         ) : (
           <LoadMoreButton onClick={this.onLoadMoreBtnClick} />

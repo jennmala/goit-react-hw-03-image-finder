@@ -14,16 +14,18 @@ export class ImageGalleryItem extends Component {
   };
 
   render() {
+    const { smallImage, alt, largeImage } = this.props;
+
     return (
       <>
         <Item onClick={this.toggleModal}>
-          <Image src={this.props.smallImage} alt={this.props.alt} />
+          <Image src={smallImage} alt={alt} />
         </Item>
 
         {this.state.showModal && (
           <Modal
-            largeImage={this.props.largeImage}
-            alt={this.props.alt}
+            largeImage={largeImage}
+            alt={alt}
             closeModal={this.toggleModal}
           />
         )}

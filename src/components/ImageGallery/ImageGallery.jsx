@@ -15,38 +15,35 @@ export class ImageGallery extends Component {
     if (prevProps.keyWord !== this.props.keyWord) {
       this.setState({ status: 'pending' });
 
-      setTimeout(() => {
-        fetchPictures(this.props.keyWord, 1)
-          .then(pictures => {
-            if (pictures.hits.length === 0) {
-              return Promise.reject(
-                new Error(
-                  `No images matching request ${this.props.keyWord}. Try another.`
-                )
-              );
-            }
-            this.setState({ pictures: pictures.hits, status: 'resolved' });
-          })
-          .catch(error => this.setState({ error, status: 'rejected' }));
-      }, 2000);
+      fetchPictures(this.props.keyWord, 1)
+        .then(pictures => {
+          if (pictures.hits.length === 0) {
+            return Promise.reject(
+              new Error(
+                `No images matching request ${this.props.keyWord}. Try another.`
+              )
+            );
+          }
+          this.setState({ pictures: pictures.hits, status: 'resolved' });
+        })
+        .catch(error => this.setState({ error, status: 'rejected' }));
     }
   }
 
   render() {
-    if (this.state.status === 'pending') {
+    const { status, error, pictures } = this.state;
+
+    if (status === 'pending') {
       return <GalleryPendingView />;
     }
 
-    if (this.state.status === 'rejected') {
-      return <GalleryErrorView message={this.state.error.message} />;
+    if (status === 'rejected') {
+      return <GalleryErrorView message={error.message} />;
     }
 
-    if (this.state.status === 'resolved') {
+    if (status === 'resolved') {
       return (
-        <GalleryImagesView
-          pictures={this.state.pictures}
-          keyWord={this.props.keyWord}
-        />
+        <GalleryImagesView pictures={pictures} keyWord={this.props.keyWord} />
       );
     }
   }
