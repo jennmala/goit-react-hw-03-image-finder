@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import { Component } from 'react';
 import { BsSearch } from 'react-icons/bs';
 import { IconContext } from 'react-icons';
@@ -14,6 +16,10 @@ import {
 export class Searchbar extends Component {
   state = {
     keyWord: '',
+  };
+
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
   };
 
   onInputChange = e => {

@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { GalleryErrorView } from 'components/GalleryErrorView/GalleryErrorView';
 import { GalleryImagesView } from 'components/GalleryImagesView/GalleryImagesView';
 import { GalleryPendingView } from 'components/GalleryPendingView/GalleryPendingView';
@@ -7,21 +9,24 @@ import { fetchPictures } from 'services/pictures-api';
 export class ImageGallery extends Component {
   state = {
     pictures: [],
-    error: null,
+    error: 'null',
     status: 'idle',
   };
 
+  static propTypes = {
+    keyWord: PropTypes.string,
+  };
+
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.keyWord !== this.props.keyWord) {
+    const { keyWord } = this.props;
+    if (prevProps.keyWord !== keyWord) {
       this.setState({ status: 'pending' });
 
-      fetchPictures(this.props.keyWord, 1)
+      fetchPictures(keyWord, 1)
         .then(pictures => {
           if (pictures.hits.length === 0) {
             return Promise.reject(
-              new Error(
-                `No images matching request ${this.props.keyWord}. Try another.`
-              )
+              new Error(`No images matching request ${keyWord}. Try another.`)
             );
           }
           this.setState({ pictures: pictures.hits, status: 'resolved' });

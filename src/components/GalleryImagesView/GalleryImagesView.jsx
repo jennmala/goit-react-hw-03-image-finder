@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { fetchPictures } from 'services/pictures-api';
+import PropTypes from 'prop-types';
 
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import { GalleryPendingView } from 'components/GalleryPendingView/GalleryPendingView';
@@ -12,6 +13,11 @@ export class GalleryImagesView extends Component {
     pictures: this.props.pictures,
     page: 2,
     isLoadingMore: false,
+  };
+
+  static propTypes = {
+    keyWord: PropTypes.string.isRequired,
+    pictures: PropTypes.arrayOf(PropTypes.object.isRequired),
   };
 
   onLoadMoreBtnClick = () => {
