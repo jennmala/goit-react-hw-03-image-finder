@@ -1,7 +1,7 @@
 import { TailSpin } from 'react-loader-spinner';
-import { Wrap } from './GalleryPendingView.styled';
+import { Wrap } from './PendingView.styled';
 
-export const GalleryPendingView = () => {
+export const PendingView = () => {
   return (
     <Wrap>
       <TailSpin height="100" width="100" color="blue" ariaLabel="loading" />

@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 
 import errorImage from 'images/sadCat.jpg';
-import { Wrap, ImageError } from './GalleryErrorView.styled';
+import { Wrap, ImageError } from './ErrorView.styled';
 
-export const GalleryErrorView = ({ message }) => {
+export const ErrorView = ({ message }) => {
   return (
     <Wrap>
       {message}
@@ -12,6 +12,6 @@ export const GalleryErrorView = ({ message }) => {
   );
 };
 
-GalleryErrorView.propTypes = {
+ErrorView.propTypes = {
   message: PropTypes.string.isRequired,
 };
